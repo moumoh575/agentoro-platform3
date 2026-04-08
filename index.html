@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentoro AI | Smart Automation Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .chat-container { height: 400px; overflow-y: auto; }
+        .agent-msg { background: #0084ff; color: white; border-radius: 18px 18px 0 18px; shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .user-msg { background: #e4e6eb; color: #1c1e21; border-radius: 18px 18px 18px 0; }
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans leading-normal tracking-normal">
+
+    <div id="login-section" class="flex items-center justify-center min-h-screen">
+        <div class="max-w-md w-full bg-white shadow-2xl rounded-3xl p-10 border border-gray-100 text-center">
+            <div class="mb-6 inline-block p-4 bg-blue-50 rounded-2xl text-blue-600">
+                <i class="fas fa-robot text-5xl"></i>
+            </div>
+            <h1 class="text-3xl font-extrabold text-gray-900 mb-2">Agentoro AI</h1>
+            <p class="text-gray-500 mb-10 text-lg">Next-gen AI Agent for Instagram Business</p>
+            
+            <button onclick="goToStep2()" class="w-full flex items-center justify-center gap-3 bg-[#1877F2] hover:bg-[#166fe5] text-white font-bold py-4 px-6 rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                <i class="fab fa-facebook-square text-2xl"></i>
+                Continue with Facebook
+            </button>
+            <div class="mt-6 flex items-center justify-center gap-4 text-gray-400 text-xs uppercase tracking-widest">
+                <span>Secure</span> • <span>Meta Verified</span> • <span>AI Powered</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="account-section" class="hidden flex items-center justify-center min-h-screen bg-slate-100">
+        <div class="max-w-md w-full bg-white shadow-xl rounded-2xl p-6 border border-gray-200">
+            <h2 class="text-xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-link text-blue-500"></i> Select Instagram Business Account
+            </h2>
+            <div onclick="goToDashboard()" class="group flex items-center justify-between p-4 border-2 border-transparent hover:border-blue-500 hover:bg-blue-50 rounded-2xl cursor-pointer transition-all">
+                <div class="flex items-center gap-4">
+                    <div class="relative">
+                        <img src="https://ui-avatars.com/api/?name=Amira+OJJ&background=6366f1&color=fff" class="w-12 h-12 rounded-full ring-2 ring-gray-100">
+                        <span class="absolute bottom-0 right-0 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-gray-900">amira_ojj</p>
+                        <p class="text-sm text-gray-500">Verified Business Account</p>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right text-gray-300 group-hover:text-blue-500 transition-colors"></i>
+            </div>
+        </div>
+    </div>
+
+    <div id="dashboard-section" class="hidden min-h-screen flex flex-col bg-gray-50">
+        <header class="bg-white border-b px-8 py-4 flex justify-between items-center sticky top-0 z-10 shadow-sm">
+            <div class="flex items-center gap-3 font-bold text-2xl tracking-tight">
+                <div class="bg-blue-600 text-white p-2 rounded-xl"><i class="fas fa-bolt"></i></div>
+                <span>Agentoro <span class="text-blue-600 font-black italic">AI</span></span>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="hidden md:flex flex-col items-end">
+                    <span class="text-sm font-bold text-gray-900">amira_ojj</span>
+                    <span class="text-[10px] font-bold text-green-500 uppercase tracking-tighter">API Live Session</span>
+                </div>
+                <img src="https://ui-avatars.com/api/?name=Amira+OJJ&background=6366f1&color=fff" class="w-10 h-10 rounded-full border border-gray-200">
+            </div>
+        </header>
+
+        <main class="flex-1 max-w-6xl w-full mx-auto p-4 md:p-8 grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="md:col-span-1 space-y-6">
+                <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                    <h3 class="text-xs font-black text-gray-400 uppercase mb-4 tracking-widest">Permissions Active</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-2 text-sm font-medium text-green-600">
+                            <i class="fas fa-check-circle"></i> instagram_manage_messages
+                        </li>
+                        <li class="flex items-center gap-2 text-sm font-medium text-green-600">
+                            <i class="fas fa-check-circle"></i> pages_messaging
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="md:col-span-3 bg-white rounded-3xl shadow-xl border border-gray-100 flex flex-col overflow-hidden">
+                <div class="bg-gray-50 px-6 py-4 border-b flex items-center justify-between">
+                    <span class="font-bold text-gray-700">Live AI Message Stream</span>
+                    <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-[10px] font-black uppercase tracking-widest">Demo Mode</span>
+                </div>
+                
+                <div id="chat-stream" class="chat-container p-6 space-y-4 bg-slate-50">
+                    <div class="flex flex-col items-start gap-1">
+                        <span class="text-[10px] text-gray-400 font-bold ml-2">CUSTOMER</span>
+                        <div class="user-msg px-4 py-3 max-w-xs shadow-sm text-sm">
+                            Hello, do you have this product in stock?
+                        </div>
+                    </div>
+
+                    <div id="ai-typing" class="hidden flex flex-col items-end gap-1">
+                         <div class="agent-msg px-4 py-3 max-w-xs shadow-sm text-sm italic pulse">
+                            Agentoro AI is typing...
+                        </div>
+                    </div>
+
+                    <div id="ai-final-reply" class="hidden flex flex-col items-end gap-1">
+                        <span class="text-[10px] text-blue-500 font-bold mr-2 uppercase tracking-tighter">Agentoro AI Agent</span>
+                        <div class="agent-msg px-4 py-3 max-w-xs shadow-sm text-sm">
+                            Yes! We have it in stock. I can help you complete the order via Instagram Shop right now. Shall I proceed?
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-white border-t">
+                    <div class="flex gap-2">
+                        <input id="demo-input" type="text" placeholder="Simulate customer message..." class="flex-1 bg-gray-50 border-gray-200 rounded-2xl px-5 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                        <button onclick="runSimulation()" class="bg-blue-600 text-white px-8 py-3 rounded-2xl font-bold hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all">
+                            Test AI
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function goToStep2() {
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('account-section').classList.remove('hidden');
+        }
+
+        function goToDashboard() {
+            document.getElementById('account-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
+        }
+
+        function runSimulation() {
+            const input = document.getElementById('demo-input');
+            if(input.value.trim() === "") return;
+            
+            input.value = "";
+            document.getElementById('ai-typing').classList.remove('hidden');
+            
+            setTimeout(() => {
+                document.getElementById('ai-typing').classList.add('hidden');
+                document.getElementById('ai-final-reply').classList.remove('hidden');
+                const stream = document.getElementById('chat-stream');
+                stream.scrollTop = stream.scrollHeight;
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
